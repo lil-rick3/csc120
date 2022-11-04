@@ -17,10 +17,13 @@ public class driver2 {
 		int rand1;
 		int rand2;
 		boolean youFuckedUp = false;
-		
+		boolean testMessedUp = false;
 		
 		for(int i = 0; i < 10000; i++) {
-			System.out.println(checkEqual(hMap1, realHMap));
+			
+			if(!checkEqual(hMap1, realHMap)) {
+				testMessedUp = true;
+			}
 			String str1;
 			String str2;
 			rand1 = ran.nextInt(4);
@@ -68,9 +71,11 @@ public class driver2 {
 			
 			
 		}
+		System.out.println("were there any errors?" + testMessedUp);
+		
 		System.out.println(hMap1.keySet());
 		System.out.println(realHMap.keySet());
-		System.out.println(youFuckedUp);
+		System.out.println("are there any action errors: " + youFuckedUp);
 		System.out.println(hMap1.size());
 		System.out.println(realHMap.size());
 		hMap1.printTable();
@@ -82,15 +87,17 @@ public class driver2 {
 	}
 	public static <K ,V> boolean checkEqual(MyHashMap<K,V> testMap, HashMap<K,V> realMap) {
 		
+		
+		boolean flag = true;
 		if(!(testMap.isEmpty() == realMap.isEmpty())) {
 			System.out.println("empty error");
-			return false;
+			flag = false;
 			//checks empty function
 		}
 		
 		if(!testMap.keySet().equals(realMap.keySet())) {
 			System.out.println("keyset error");
-			return false;
+			flag = false;
 			//checks to see if all the keys are the same
 		}
 		Integer iClass;
@@ -98,7 +105,7 @@ public class driver2 {
 			iClass = i;
 			if(!(testMap.containsKey((K) iClass) == realMap.containsKey((K) iClass))){
 				System.out.println("contains error");
-				return false;
+				flag = false;
 				//checks all possible keys and sees if the key is in the map
 			}
 		}
@@ -107,13 +114,13 @@ public class driver2 {
 		for(K key:testMap.keySet()) {
 			if(!testMap.get(key).equals(realMap.get(key))) {
 				System.out.println("get error");
-				return false;
+				flag = false;
 			}
 			
 		}
 		if(testMap.size() != realMap.size()) {
 			System.out.println("size error");
-			return false;
+			flag = false;
 		}
 		
 
@@ -121,7 +128,7 @@ public class driver2 {
 		
 		
 		
-		return true;
+		return flag;
 		
 	}
 }
